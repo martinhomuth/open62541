@@ -206,6 +206,8 @@ compatibleValueRankArrayDimensions(UA_Int32 valueRank, size_t arrayDimensionsSiz
 UA_StatusCode
 compatibleValueRanks(UA_Int32 valueRank, UA_Int32 constraintValueRank);
 
+const UA_DataType * findDataType(const UA_NodeId *typeId);
+
 /*******************/
 /* Single-Services */
 /*******************/
