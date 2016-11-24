@@ -117,7 +117,7 @@ typeCheckVariableNode(UA_Server *server, UA_Session *session, UA_VariableNode *n
     /* Workaround: If there is no value but the type is concrete, create an
      * "empty" value */
     if(!value.value.type) {
-        const UA_DataType *type = findDataType(&node->dataType);
+        const UA_DataType *type = UA_findDataType(&node->dataType);
         if(type) {
             UA_Variant v;
             UA_Variant_init(&v);
