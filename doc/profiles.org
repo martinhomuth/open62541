@@ -1,0 +1,116 @@
+#+TITLE: Open62541 Conformance to OPC UA Profiles
+#+AUTHOR: Martin Homuth
+#+EMAIL: martin@martinhomuth.de
+
+* ConformanceGroups
+** Address Space Model
+   Defines ConformanceUnits for various features of the OPC UA
+   AddressSpace.
+** Aggregates
+   All ConformanceUnits that are related to Aggregates, including
+   individual ConformanceUnits for each supported Aggregate as
+   described in Part 13.
+** Alarms and Conditions
+   All ConformanceUnits that are associated with the OPC UA
+   information model for Conditions, acknowledgeable Conditions,
+   confirmations and Alarms as specified in Part 9.
+** Attribute Services
+   Includes ConformanceUnits to read or write current or historical
+   Attribute values.
+** Auditing
+   User level security includes support for security audit trails, with
+   traceability between Client and Server audit logs.
+** Base Information
+   All information elements as defined in Part 5.
+** Data Access
+   ConformanceUnits specific to Clients and Servers that deal with
+   the representation and use of automation data as specified in
+   Part 8.
+** Discovery Services
+   ConformanceUnits which focus on Server Endpoint Discovery.
+
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Title                                                 | Category | Description                                                                                                                                                                                                                                                                                                                                                                     | Location                                                                                         | Status               |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Get Endpoints                               | Server   | Support the GetEndpoints Service to obtain all Endpoints of the Server. This includes filtering based on Profiles.                                                                                                                                                                                                                                                              | [[https://github.com/open62541/open62541/blob/0.2/src/server/ua_services_discovery.c#L43][link]] | no profile filtering |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Find Servers Self                           | Server   | Support the FindServers Service only for itself.                                                                                                                                                                                                                                                                                                                                | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Register                                    | Server   | Call the RegisterServer Service to register itself (OPC UA Server) with an external Discovery Service via a secure channel with a SecurityMode other than "None".                                                                                                                                                                                                               | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Register2                                   | Server   | Call the RegisterServer2 Service to register with an external Discovery Service via a Secure Channel with a SecurityMode other than "None". This includes passing a list of short capability identifiers. The use of these identifiers is specified in Part 12; the complete list can be found in http://www.opcfoundation.org/UA/schemas/1.03/ServerCapabilityIdentifiers.csv. | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Configuration                               | Server   | Allow configuration of the Discovery Server URL where the Server will register itself. Allow complete disabling of registration with a Discovery Server.                                                                                                                                                                                                                        | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Server Announcment using mDNS               | Server   | Provide mDNS functionality to announce a Server with its capabilities. The capability identifiers and the use of mDNS records for the purpose of OPC UA Discovery is specified in Part 12.                                                                                                                                                                                      | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers Basic                   | Client   | Uses the FindServers Service to obtain all Servers installed on a given platform.                                                                                                                                                                                                                                                                                               | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers with URI                | Client   | Use FindServers Service to obtain URLs for specific Server URIs.                                                                                                                                                                                                                                                                                                                | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers Dynamic                 | Client   | Detect new Servers after an initial FindServers Service Call                                                                                                                                                                                                                                                                                                                    | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers on Network using LDS-ME | Client   | Use FindServersOnNetwork Service to obtain URLs for specific Server URIs. Note that this Service is available via the Local Discovery Server with multicast extension (LDS-ME).                                                                                                                                                                                                 | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers on Network using mDNS   | Client   | Use mDNS based Service Discovery to locate Servers on the same multicast network. The contents of mDNS records for OPC UA Discovery are described in Part 12.                                                                                                                                                                                                                   | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers on Network              | Client   | Support one of the options to locate Servers on the network                                                                                                                                                                                                                                                                                                                     | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Find Servers in GDS                  | Client   | Use the QueryServers Method on the GDS Directory Object to locate Servers that meet filter criteria specified in the request. This Method is specified in Part 12.                                                                                                                                                                                                              | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Get Endpoints Dynamic                | Client   | Detect changes to the Endpoints after an initial GetEndpoints Service call.                                                                                                                                                                                                                                                                                                     | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+   | Discovery Client Configure Endpoint                   | Client   | Allow specification of an Endpoint without going through the Discovery Service Set.                                                                                                                                                                                                                                                                                             | n/a                                                                                              | n/a                  |
+   |-------------------------------------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------+----------------------|
+
+** Historical Access
+   Access to archived data of node Attribute values or Events.
+** Method Services
+   Methods represent the function calls of Objects. Methods are
+   invoked and return only after completion (successful or
+   unsuccessful).
+** Miscellaneous
+   This group contains ConformanceUnits that cover miscellaneous
+   subjects, such as recommended behaviours, documentation etc. These
+   ConformanceUnits typically do not fit into any of the other groups.
+** Monitored Item Services
+   Clients define MonitoredItems to subscribe to data and Events.
+   Each MonitoredItem identifies the item to be monitored and the
+   Subscription to use to send Notifications.
+** Node Management Services
+   Bundles ConformanceUnits for all Services to add and delete
+   OPC UA AddressSpace Nodes and References.
+** Protocol and Encoding
+   Covers all transport and encoding combinations that are
+   specified in Part 6.
+** Query Services
+   A Query may be used to provide advanced filtering and return
+   a subset of data.
+** Redundancy
+   The design of OPC UA ensures that vendors can create
+   redundant Clients and redundant Servers in a consistent
+   manner. Redundancy may be used for high availability, fault
+   tolerance and load balancing.
+** Security
+   Security related ConformanceUnits that can be profiled this
+   includes all aspects of security.
+** Session Services
+   An (OPC UA) Session is an application layer connection.
+** Subscription Services
+   Subscriptions are used to report Notifications to the Client.
+** View Services
+   Clients use the View Service Set to navigate through the OPC
+   UA AddressSpace or through a View (a subset) of the OPC UA
+   AddressSpace.
+
+* Server Category
+
+** Core Server Facet
+
+* Client Category
+
+* Transport Category
+
+* Security Category
+
+* Global Directory Service Category
